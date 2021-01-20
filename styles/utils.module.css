@@ -1,0 +1,18 @@
+
+.flexible {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 1em 0;
+    width: 100%;
+}
+.bold {
+    font-weight: 500;
+}
+.muted {
+    color: rgba(0, 0, 0, .3);
+}
+
+.list {
+    width: 50vw;
+}
