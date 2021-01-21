@@ -8,7 +8,14 @@ import html from 'remark-html';
 
 const rootDir = path.join(process.cwd(), 'books/collection');
 
-export function getSortedBooks() {
+interface Book {
+    id: string,
+    title: string,
+    description?: string
+    date: string,
+};
+
+export const getSortedBooks = () => {
 
     const fileNames = fs.readdirSync(rootDir);
 
@@ -24,7 +31,7 @@ export function getSortedBooks() {
         };
     });
 
-    return booksList.sort((a, b) => (
+    return booksList.sort((a:Book, b:Book) => (
         a.date < b.date ? 1 : -1
     ));
 }

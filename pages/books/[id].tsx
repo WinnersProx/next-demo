@@ -1,8 +1,9 @@
+import { GetStaticPaths, GetStaticProps } from "next";
 import Head from "next/head";
 import { getBookDetails, getBookIds } from "../../books/books";
 import Layout from "../../components/layout";
 
-import utilsStyles from '../../styles/utils.module.css';
+const utilsStyles = require('../../styles/utils.module.css');
 
 export default function Book({ book }) {
 
@@ -27,14 +28,14 @@ export default function Book({ book }) {
 }
 
 /** Required for dynamic routing  */
-export async function getStaticPaths() {
-    const paths = getBookIds();
+export const getStaticPaths: GetStaticPaths = async () => {
+  const paths = getBookIds();
 
-    return { paths, fallback: false };
+  return { paths, fallback: false };
 }
 
-export async function getStaticProps({ params }) {
-    const book = await getBookDetails(params.id);
+export const getStaticProps: GetStaticProps = async ({ params }) => {
+  const book = await getBookDetails(params.id);
 
-    return { props: { book } };
+  return { props: { book } };
 }

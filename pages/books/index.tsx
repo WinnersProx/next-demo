@@ -2,8 +2,9 @@ import Head from "next/head";
 import { getSortedBooks } from "../../books/books";
 import Layout from "../../components/layout";
 import Link from 'next/link';
+import { GetStaticProps } from "next";
 
-import utilsStyles from '../../styles/utils.module.css';
+const utilsStyles = require('../../styles/utils.module.css');
 
 export default function BooksPage({ books }) {
 
@@ -19,7 +20,9 @@ export default function BooksPage({ books }) {
           {
             books.length && books.map(({ date, title, id }) => (
               <div className={utilsStyles.flexible} key={id}>
-                <Link className={utilsStyles.bold} href={`books/${id}`}>{title}</Link>
+                <Link href={`books/${id}`}>
+                  <div className={utilsStyles.bold}>{title}</div>
+                </Link>
                 <div className={utilsStyles.muted}>{date}</div>
               </div>
             ))
@@ -30,7 +33,7 @@ export default function BooksPage({ books }) {
   );
 }
 
-export async function getStaticProps({ params }) {
+export const getStaticProps: GetStaticProps = async ({ params }) => {
    return {
      props: {
       books: getSortedBooks()

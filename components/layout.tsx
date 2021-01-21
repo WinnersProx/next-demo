@@ -21,8 +21,6 @@ export default function Layout({ children }) {
                     <img src="/vercel.svg" alt="Vercel Logo" className="logo" />
                 </a>
             </footer>
-            {/* <style jsx global>{``}</style> */}
-
         </div>
     )
 }
