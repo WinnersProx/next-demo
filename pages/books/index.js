@@ -1,11 +1,12 @@
 import Head from "next/head";
 import { getSortedBooks } from "../../books/books";
 import Layout from "../../components/layout";
+import Link from 'next/link';
 
 import utilsStyles from '../../styles/utils.module.css';
 
 export default function BooksPage({ books }) {
-  console.log(books);
+
   return (
     <Layout>
       <Head>
@@ -18,7 +19,7 @@ export default function BooksPage({ books }) {
           {
             books.length && books.map(({ date, title, id }) => (
               <div className={utilsStyles.flexible} key={id}>
-                <div className={utilsStyles.bold}>{title}</div>
+                <Link className={utilsStyles.bold} href={`books/${id}`}>{title}</Link>
                 <div className={utilsStyles.muted}>{date}</div>
               </div>
             ))
@@ -29,7 +30,7 @@ export default function BooksPage({ books }) {
   );
 }
 
-export async function getStaticProps() {
+export async function getStaticProps({ params }) {
    return {
      props: {
       books: getSortedBooks()

@@ -6,6 +6,11 @@
     margin: 1em 0;
     width: 100%;
 }
+
+.flexible a:hover{
+    text-decoration: underline;
+    color: blue;
+}
 .bold {
     font-weight: 500;
 }
@@ -15,4 +20,8 @@
 
 .list {
     width: 50vw;
+}
+
+.pointer {
+    cursor: pointer;
 }
