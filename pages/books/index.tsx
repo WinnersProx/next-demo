@@ -1,12 +1,26 @@
 import Head from "next/head";
-import { getSortedBooks } from "../../books/books";
 import Layout from "../../components/layout";
 import Link from 'next/link';
-import { GetStaticProps } from "next";
+import gql from "graphql-tag";
+import { useQuery } from "@apollo/react-hooks";
+import { withDataAndRouter } from "../../src/helpers/with-data";
 
 const utilsStyles = require('../../styles/utils.module.css');
 
-export default function BooksPage({ books }) {
+const query = gql`
+  query fetchBooks($page: Int!) {
+    books(page: $page) {
+      id
+      title
+    }
+  }
+`;
+
+
+export function BooksPage ()  {
+  const page = 1;
+
+  const { data } = useQuery(query, { variables: { page }});
 
   return (
     <Layout>
@@ -17,13 +31,14 @@ export default function BooksPage({ books }) {
 
       <main>
         <div className={utilsStyles.list}>
+          Your list is here man...
           {
-            books.length && books.map(({ date, title, id }) => (
+            data?.books.length && data?.books.map(({ title, id }) => (
               <div className={utilsStyles.flexible} key={id}>
                 <Link href={`books/${id}`}>
                   <div className={utilsStyles.bold}>{title}</div>
                 </Link>
-                <div className={utilsStyles.muted}>{date}</div>
+                {/* <div className={utilsStyles.muted}>{date}</div> */}
               </div>
             ))
           }
@@ -33,10 +48,12 @@ export default function BooksPage({ books }) {
   );
 }
 
-export const getStaticProps: GetStaticProps = async ({ params }) => {
-   return {
-     props: {
-      books: getSortedBooks()
-     }
-   }
-}
+// export const getStaticProps: GetStaticProps = async ({ params }) => {
+//    return {
+//      props: {
+//       books: getSortedBooks()
+//      }
+//    }
+// }
+
+export default withDataAndRouter(BooksPage);

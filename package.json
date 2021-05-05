@@ -3,23 +3,39 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "nodemon",
     "build": "next build",
-    "start": "next start"
+    "start": "nodemon"
   },
   "dependencies": {
-    "@apollo/client": "^3.3.7",
-    "graphql": "^15.4.0",
-    "gray-matter": "^4.0.2",
-    "next": "^10.0.0",
+    "@apollo/react-common": "3.1.3",
+    "@apollo/react-hooks": "3.1.3",
+    "@apollo/react-ssr": "3.1.3",
+    "@prisma/client": "^2.22.0",
+    "apollo-cache-inmemory": "^1.6.6",
+    "apollo-client": "^2.6.10",
+    "apollo-link-http": "^1.5.17",
+    "apollo-server-express": "^2.24.0",
+    "dotenv": "^8.2.0",
+    "dotenv-webpack": "^7.0.2",
+    "express": "^4.17.1",
+    "graphql": "^15.5.0",
+    "graphql-tag": "^2.12.4",
+    "graphql-tools": "^7.0.4",
+    "gray-matter": "^4.0.3",
+    "isomorphic-unfetch": "^3.1.0",
+    "next": "^10.2.0",
     "react": "17.0.1",
     "react-dom": "17.0.1",
     "remark": "^13.0.0",
     "remark-html": "^13.0.1"
   },
   "devDependencies": {
-    "@types/node": "^14.14.22",
-    "@types/react": "^17.0.0",
-    "typescript": "^4.1.3"
+    "@types/node": "^14.14.43",
+    "@types/react": "^17.0.5",
+    "nodemon": "^2.0.7",
+    "prisma": "^2.22.0",
+    "ts-node": "^9.1.1",
+    "typescript": "^4.2.4"
   }
 }
