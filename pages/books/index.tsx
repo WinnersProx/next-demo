@@ -8,19 +8,19 @@ import { withDataAndRouter } from "../../src/helpers/with-data";
 const utilsStyles = require('../../styles/utils.module.css');
 
 const query = gql`
-  query fetchBooks($page: Int!) {
-    books(page: $page) {
-      id
-      title
-    }
+query fetchBooks($page: Int!, $cursor: Int) {
+  books(page: $page, cursor: $cursor) {
+    books { id title }
+    pageInfo { hasNextPage nextCursor }
   }
+}
 `;
 
 
 export function BooksPage ()  {
   const page = 1;
 
-  const { data } = useQuery(query, { variables: { page }});
+  const { data, fetchMore } = useQuery(query, { variables: { page }});
 
   return (
     <Layout>
@@ -33,7 +33,7 @@ export function BooksPage ()  {
         <div className={utilsStyles.list}>
           Your list is here man...
           {
-            data?.books.length && data?.books.map(({ title, id }) => (
+            data?.books?.books.length && data?.books?.books.map(({ title, id }) => (
               <div className={utilsStyles.flexible} key={id}>
                 <Link href={`books/${id}`}>
                   <div className={utilsStyles.bold}>{title}</div>
@@ -43,17 +43,29 @@ export function BooksPage ()  {
             ))
           }
         </div>
+        { data?.books?.pageInfo.hasNextPage && <div>
+          <button 
+              className="btn ptn-primary"
+              onClick={() => fetchMore({ 
+                variables: { page, cursor: data?.books?.pageInfo.nextCursor },
+                updateQuery: (prev, { fetchMoreResult }) => {
+                  if(!fetchMoreResult) return prev;
+
+                  return {
+                    __typename: 'PaginatedBooks',
+                    books: [
+                      ...prev.books.books,
+                      ...fetchMoreResult.books.books
+                    ],
+                    pageInfo: fetchMoreResult.books.pageInfo
+                  };
+                }
+              })}
+              >Load more...</button>
+        </div>}
       </main>
     </Layout>
   );
 }
-
-// export const getStaticProps: GetStaticProps = async ({ params }) => {
-//    return {
-//      props: {
-//       books: getSortedBooks()
-//      }
-//    }
-// }
 
 export default withDataAndRouter(BooksPage);
