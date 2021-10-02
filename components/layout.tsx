@@ -1,3 +1,4 @@
+import NewsLetterFooter from "./news-letter-footer";
 
 
 export default function Layout({ children }) {
@@ -11,16 +12,7 @@ export default function Layout({ children }) {
 
                 <div>{children}</div>
             </main>
-            <footer>
-                <a
-                    href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    Powered by{' '}
-                    <img src="/vercel.svg" alt="Vercel Logo" className="logo" />
-                </a>
-            </footer>
+            <NewsLetterFooter />
         </div>
     )
 }
