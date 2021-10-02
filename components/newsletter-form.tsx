@@ -13,6 +13,9 @@ export interface INewsLetterFormProps {
 export default function NewsLetterForm({ subscribe, status, message, onValidated }: INewsLetterFormProps) {
 
     const [email, setEmail] = useState("");
+    const [formTags, setTags] = useState([]);
+
+    const tags = ['Weekly', 'Daily', 'Minutely'];
 
 
     const handleFormSubmission = (event: SyntheticEvent) => {
@@ -23,6 +26,11 @@ export default function NewsLetterForm({ subscribe, status, message, onValidated
         return onValidated({
             EMAIL: email,
             // NAME: name
+            group: {
+                "29862" : [
+                    2
+                ]
+            }
         });
     };
 
@@ -49,6 +57,25 @@ export default function NewsLetterForm({ subscribe, status, message, onValidated
                     className="form-control" name="email"
                     onChange={(e: React.FormEvent<HTMLInputElement>) => setEmail(e.currentTarget.value)}
                 />
+                <div className="tags-list">
+                    {
+                        tags.map((tag, index) => (
+                            <div key={index}>
+                                <input type="checkbox" value="8" name="group[01245][8]" id={`tag-${index}`} onChange={(e: React.FormEvent<HTMLInputElement>) => {
+                                    if(!e.currentTarget.checked) {
+                                        if(formTags.includes(tag)) setTags(formTags.filter(t => tag !== t));
+                                        return;
+                                    };
+                            
+                                    setTags([ ...formTags, tag]);
+                                    console.log('tags', formTags);
+
+                                }} />
+                                <label htmlFor={`tag-${index}`} >{tag}</label>
+                            </div>
+                        ))
+                    }
+                </div>
             </div>
             <div className="form-group">
                 <button>Subscribe</button>
